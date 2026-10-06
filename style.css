@@ -25,3 +25,17 @@ ul {
     text-decoration: line-through;
     opacity: 0.5;
 }
+
+li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+li span {
+    flex: 1;
+}
+
+li button {
+    margin-left: 10px;
+}
