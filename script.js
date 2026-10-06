@@ -1,3 +1,4 @@
+const prioritySelect = document.getElementById("priority");
 const taskInput = document.getElementById("taskInput");
 const addButton = document.getElementById("addButton");
 const taskList = document.getElementById("taskList");
@@ -10,6 +11,7 @@ function saveTasks() {
 
         tasks.push({
             text: taskText,
+            prtorty: li.dataset.priority,
             completed: li.classList.contains("completed")
         });
     });
@@ -17,7 +19,7 @@ function saveTasks() {
     localStorage.setItem("tasks", JSON.stringify(tasks));
 }
 
-function createTaskElement(taskText, completed = false) {
+function createTaskElement(taskText, priority = "Low", completed = false) {
     const li = document.createElement("li");
 
     if (completed) {
@@ -25,7 +27,17 @@ function createTaskElement(taskText, completed = false) {
     }
 
     const span = document.createElement("span");
-    span.textContent = taskText;
+    span.textContent = `${taskText} [${priority}]`;
+
+ function createTaskElement(taskText, priority = "Low", completed = false) {
+    const li = document.createElement("li");
+
+    if (completed) {
+        li.classList.add("completed");
+    }
+
+    const span = document.createElement("span");
+    span.textContent = `${taskText} [${priority}]`;
 
     span.addEventListener("click", function () {
         li.classList.toggle("completed");
@@ -40,6 +52,27 @@ function createTaskElement(taskText, completed = false) {
         saveTasks();
     });
 
+    li.dataset.priority = priority;
+
+    li.appendChild(span);
+    li.appendChild(deleteButton);
+
+    taskList.appendChild(li);
+}   span.addEventListener("click", function () {
+        li.classList.toggle("completed");
+        saveTasks();
+    });
+
+    const deleteButton = document.createElement("button");
+    deleteButton.textContent = "Delete";
+
+    deleteButton.addEventListener("click", function () {
+        li.remove();
+        saveTasks();
+    });
+
+    li.dataset.priority = priority;
+
     li.appendChild(span);
     li.appendChild(deleteButton);
 
@@ -53,7 +86,9 @@ function addTask() {
         return;
     }
 
-    createTaskElement(taskText);
+    const priority = prioritySelect.value;
+
+    createTaskElement(taskText, priority);
 
     taskInput.value = "";
 
@@ -64,7 +99,7 @@ function loadTasks() {
     const savedTasks = JSON.parse(localStorage.getItem("tasks")) || [];
 
     savedTasks.forEach(function (task) {
-        createTaskElement(task.text, task.completed);
+        createTaskElement(task.text, task.priorty, task.completed);
     });
 }
 
