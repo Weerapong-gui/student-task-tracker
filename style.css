@@ -1,0 +1,19 @@
+.input-area {
+  display: flex;
+  gap: 10px;
+}
+
+input {
+  float: 1;
+  padding: 10px;
+}
+
+button {
+  padding: 10px 16px;
+  cursor: pointer;
+}
+
+ul {
+  padding: 0;
+  list-style: none;
+}
